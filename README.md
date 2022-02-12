@@ -85,3 +85,10 @@ v := FutureOf(readUserPasswordFromConsole)
 v.Then(print_password).Then(enterPasswordToTextField).Then(savePasswordCookie)
 // They are executed in parallel, with no order of preference.
 ```
+
+# The futures package uses go routines heavily. You can get the go routine status by calling the functions below
+```
+LaunchCount() => Total goroutines launched until now
+ActiveCount() => How many goroutines are still running
+ExitCount() => How many goroutines has ended
+```
