@@ -62,3 +62,26 @@ if ready {
 v := future.GetWait()
 // do something with v
 ```
+
+# You can react to future ready events by using "Then", and you can have multiple of them
+```
+func readUserPasswordFromConsole() string {
+	// do something
+	return "password1"
+}
+
+func print_password(what string) {
+	fmt.Println(what)
+}
+
+func enterPasswordToTextField(what string) {
+	// do your magic here
+}
+
+func savePasswordCookie(what string) {
+	// do your magic here
+}
+v := FutureOf(readUserPasswordFromConsole)
+v.Then(print_password).Then(enterPasswordToTextField).Then(savePasswordCookie)
+// They are executed in parallel, with no order of preference.
+```
