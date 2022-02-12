@@ -29,7 +29,7 @@ future := InstantFutureOf(5) => Future[int] = 5, availablility = immediate
 
 # You can create a future that is available after certain time
 ```
-future := DelayedFutureOf("Hello, world") => Future[string] = "Hello, world", availability = after 5 seconds
+future := DelayedFutureOf("Hello, world", 5*time.Second) => Future[string] = "Hello, world", availability = after 5 seconds
 ```
 
 # You can create a future of a long running function, future is available when the function returns
