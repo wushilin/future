@@ -7,7 +7,7 @@ A future library for Golang
 // Future defines the Characteristics of a Future object
 type Future[T any] interface {
   // Get the current value of the future. First result is whether a result is ready, second result is the current result
-	GetNow() (bool, T)
+  GetNow() (bool, T)
   // Wait up to duration for a result to be ready. First result is whether a result is ready, second result is the result value
   GetTimeout(duration time.Duration) (bool, T)
   // Wait until a result is ready, and get the result
@@ -18,7 +18,7 @@ type Future[T any] interface {
 
   // After the result is ready, run the function. Multiple function can be run, and they are all run in parallel.
   // future.Then(fun1).Then(fun2).Then(fun3) => fun1, fun2, fun3 are run in parallel in separate goroutines, do your sync if necesary.
-	Then(func(T)) Future[T]
+  Then(func(T)) Future[T]
 }
 ```
 
@@ -36,8 +36,8 @@ future := DelayedFutureOf("Hello, world", 5*time.Second) => Future[string] = "He
 ```go
 // Future[int] = 5, availability = after func returns (5 seconds later)
 future := FutureOf(func () int {
-	time.Sleep(5 * time.Second)
-	return 5
+  time.Sleep(5 * time.Second)
+  return 5
 }
 ```
 
@@ -45,7 +45,7 @@ future := FutureOf(func () int {
 ```go
 ready, v := future.GetNow()
 if ready {
-	// do something with v
+  // do something with v
 }
 ```
 
@@ -53,7 +53,7 @@ if ready {
 ```go
 ready, v := future.GetTimeout(100 * time.Millisecond)
 if ready {
-	// do something with v
+  // do something with v
 }
 ```
 
@@ -66,20 +66,20 @@ v := future.GetWait()
 # You can react to future ready events by using "Then", and you can have multiple of them
 ```go
 func readUserPasswordFromConsole() string {
-	// do something
-	return "password1"
+  // do something
+  return "password1"
 }
 
 func print_password(what string) {
-	fmt.Println(what)
+  fmt.Println(what)
 }
 
 func enterPasswordToTextField(what string) {
-	// do your magic here
+  // do your magic here
 }
 
 func savePasswordCookie(what string) {
-	// do your magic here
+  // do your magic here
 }
 v := FutureOf(readUserPasswordFromConsole)
 v.Then(print_password).Then(enterPasswordToTextField).Then(savePasswordCookie)
