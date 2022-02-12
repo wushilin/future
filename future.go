@@ -95,10 +95,13 @@ func DelayedFutureOf[T any](what T, after time.Duration) Future[T] {
 	})
 }
 
+func NewPendingFuture[T any](zeroValue T) Future[T] {
+	return &ValueFuture[T]{zeroValue, make(chan any, 1), sync.Mutex{}}
+}
 
 func FutureOf[T any](f func() T) Future[T] {
   var zv T
-  result := &ValueFuture[T]{zv, make(chan any, 1), sync.Mutex{}}
+  result := NewPendingFuture(zv)
   launch(func() {
     resultVal := f()
     result.Set(resultVal)
