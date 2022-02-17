@@ -70,6 +70,12 @@ func (v *ValueFuture[T]) GetTimeout(duration time.Duration) (bool, T) {
 	}
 
   select {
+    case <-v.signal:
+			return true, v.value
+    default:
+      // it is not ready
+  }
+  select {
 		case <-v.signal:
 			return true, v.value
     case <-time.After(duration):
